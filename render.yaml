@@ -1,8 +1,3 @@
-databases:
-  - name: cryptovault-db
-    databaseName: cryptovault
-    user: admin
-
 services:
   # 1. Backend Spring Boot Database & API Service
   - type: web
@@ -11,19 +6,13 @@ services:
     plan: free
     dockerfilePath: ./Dockerfile
     envVars:
-      # Render's internal PostgreSQL URLs start with postgres://, which Spring Boot auto-detects
       - key: SPRING_DATASOURCE_URL
-        fromDatabase:
-          name: cryptovault-db
-          property: connectionString
+        # Replace these values in your Render Dashboard Environment Variables
+        value: "jdbc:mysql://YOUR_DB_HOST:3306/YOUR_DB_NAME" 
       - key: SPRING_DATASOURCE_USERNAME
-        fromDatabase:
-          name: cryptovault-db
-          property: user
+        value: "admin"
       - key: SPRING_DATASOURCE_PASSWORD
-        fromDatabase:
-          name: cryptovault-db
-          property: password
+        value: "password"
 
   # 2. Frontend React Client Application
   - type: web
