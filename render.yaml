@@ -13,13 +13,12 @@ services:
       - key: SPRING_DATASOURCE_PASSWORD
         # IMPORTANT: Replace YOUR_DB_PASSWORD below with the real password before pushing, 
         # OR edit this environment variable securely in your Render Dashboard!
-        value: "YOUR_DB_PASSWORD"
+        value: "wN8o5NlCpqziutM0"
 
   # 2. Frontend React Client Application
   - type: web
     name: cryptovault-frontend
     env: static
-    plan: free
     buildCommand: "cd frontend && npm install && npm run build"
     staticPublishPath: "./frontend/build"
     envVars:
