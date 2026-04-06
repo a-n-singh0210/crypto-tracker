@@ -40,7 +40,20 @@ export const addCrypto = (data) =>
 export const deleteCrypto = (id) => 
   fetch(`${API}/portfolio/delete/${id}`, {
     method: "DELETE"
-  }).then(handleResponse);
+  }).then(handleResponse).catch(err => {
+    console.error("Delete failed:", err);
+    throw err;
+  });
+
+export const updateCrypto = (id, data) =>
+  fetch(`${API}/portfolio/update/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  }).then(handleResponse).catch(err => {
+    console.error("Update failed:", err);
+    throw err;
+  });
 
 export const login = (data) => 
   fetch(`${API}/auth/login`, {

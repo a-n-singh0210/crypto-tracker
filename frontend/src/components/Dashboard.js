@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { getPortfolio, getAnalytics, getPredictions, deleteCrypto } from "../services/api";
+import { getPortfolio, getAnalytics, getPredictions, deleteCrypto, updateCrypto } from "../services/api";
 import AddCryptoForm from "./AddCryptoForm";
 import Layout from "./Layout";
 import AllocationChart from "./AllocationChart";
@@ -54,13 +54,9 @@ export default function Dashboard({ username = "test", onLogout }) {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      await fetch(`http://localhost:8080/portfolio/update/${editingAsset.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          quantity: parseFloat(editFormData.quantity),
-          buyPrice: parseFloat(editFormData.buyPrice)
-        })
+      await updateCrypto(editingAsset.id, {
+        quantity: parseFloat(editFormData.quantity),
+        buyPrice: parseFloat(editFormData.buyPrice)
       });
       setEditingAsset(null);
       loadData();
