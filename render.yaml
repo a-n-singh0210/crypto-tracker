@@ -1,0 +1,33 @@
+services:
+  # 1. Backend Spring Boot Database & API Service
+  - type: web
+    name: cryptovault-backend
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        # Replace these values in your Render Dashboard Environment Variables
+        value: "jdbc:mysql://YOUR_DB_HOST:3306/YOUR_DB_NAME" 
+      - key: SPRING_DATASOURCE_USERNAME
+        value: "admin"
+      - key: SPRING_DATASOURCE_PASSWORD
+        value: "password"
+
+  # 2. Frontend React Client Application
+  - type: web
+    name: cryptovault-frontend
+    env: static
+    plan: free
+    buildCommand: "cd frontend && npm install && npm run build"
+    staticPublishPath: "./frontend/build"
+    envVars:
+      - key: REACT_APP_API_URL
+        fromService:
+          type: web
+          name: cryptovault-backend
+          envVarKey: RENDER_EXTERNAL_URL
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
