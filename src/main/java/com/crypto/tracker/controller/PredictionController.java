@@ -45,7 +45,7 @@ public class PredictionController {
         // Batch fetch current prices
         Map<String, Double> currentPrices = priceService.getPrices(assetNames);
 
-        return assetNames.parallelStream().map(assetName -> {
+        return assetNames.stream().map(assetName -> {
             double currentPrice = currentPrices.getOrDefault(assetName, 0.0);
             
             // Secondary Fallback: Use average buy price from portfolio if still 0

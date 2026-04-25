@@ -52,7 +52,7 @@ const MarketTrends = () => {
     fetchMarketData();
     const interval = setInterval(() => {
       fetchMarketData();
-    }, 5000);
+    }, 60000); // Refresh every 60 seconds instead of 5
     return () => clearInterval(interval);
   }, []);
 
